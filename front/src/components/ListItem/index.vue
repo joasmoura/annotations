@@ -1,16 +1,19 @@
 <script setup lang="ts">
-  import { defineProps } from 'vue'
+import { defineProps } from 'vue'
+  import {formatDate} from '../../utils/date'
   interface typeProps {
     item: Object
   } 
 
   const props = defineProps<typeProps>()
 
-const limitString = (str: string) => {
-    const limit = 28
-    if (str.length > limit) {
-      return str.slice(0, limit) + '...'
-    }
+  const limitString = (str: string) => {
+    if (!str) return
+    
+      const limit = 28
+      if (str.length > limit) return str.slice(0, limit) + '...'
+      
+      return str
   }
 </script>
 <template>
@@ -21,7 +24,7 @@ const limitString = (str: string) => {
 
     <div class="flex flex-col">
       <a href="javascript:void(0)" class="underline"  @click="$emit('itemSelected', props.item.id)">{{ limitString(props.item?.description) }}</a>
-      <span>{{ props.item?.date }}</span>
+      <span>{{ formatDate(props.item?.date) }} {{ formatDate(props.item?.date, true) }}</span>
     </div>
 
     <button @click="$emit('deleteItem', props.item.id)">
