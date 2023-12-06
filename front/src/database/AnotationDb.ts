@@ -93,6 +93,30 @@ export default class AnotationDb {
     transaction.addEventListener('error', (e: any) => console.log('Transaction error', e));
   }
 
+  async update(id: number, callback: any) {
+    const transaction = this.#DB.transaction([this.#DBSTORENAME], 'readwrite')
+    const objectStore = transaction.objectStore(this.#DBSTORENAME)
+    const request = objectStore.get(id)
+    
+    request.addEventListener('success', (event) => {
+      const data = event.target.result
+
+      data.description = this.#description
+      data.category = this.#category,
+      data.date = this.#date,
+      data.potential = this.#potential
+        
+        const requestUpdate = objectStore.put(data);
+        requestUpdate.onerror = (event) => {
+          callback('Houve um erro ao alterar esta anotação', true)
+        }
+
+        requestUpdate.onsuccess = (event) => {
+          callback('Salvo com sucesso')
+        }
+    })
+  }
+
   setDescription (description: string) {
     this.#description = description
   }

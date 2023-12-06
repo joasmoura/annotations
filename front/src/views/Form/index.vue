@@ -37,9 +37,16 @@
       annotation.setDate(date.value)
       annotation.setPotential(potential.value)
 
-      annotation.create()
+      if (route.params.id) {
+        annotation.update(parseInt(route.params.id), setShowMessage)
+      } else {
+        annotation.create()
+        router.push('/list')
+      }
+  }
 
-      router.push('/list')
+  const setShowMessage = (message: String, error: false) => {
+    console.log(message)
   }
   
 const getItem = (id: number) => {
