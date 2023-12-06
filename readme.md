@@ -3,7 +3,7 @@
 
 Desenvolvido com Vuejs
 
-## instalar dependências
+## instalar dependências e rodar projeto
 
 cd /front
 ```sh
