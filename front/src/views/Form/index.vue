@@ -4,9 +4,10 @@
   import Select from '../../components/Form/Select/index.vue'
   import AnotationDb from '../../database/AnotationDb'
   import Categorie from '../../database/Categorie'
-  import { ref, watch, onBeforeMount, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useRouter, useRoute } from 'vue-router'
   import ModalDelete from '../../components/ModalDelete/index.vue'
+  import { vMaska } from "maska"
 
   const annotation = new AnotationDb()
   const categories = new Categorie
@@ -80,7 +81,7 @@ const getItem = (id: number) => {
       <TextArea placeholder="Exp.: Ao falar com Luiza" rows="7" v-model="description" :error="error?.description"/>
 
       <label for="potencial">Potencial do negócio</label>
-      <TextInput type="text" id="potencial" placeholder="Potencial do negócio" v-model="potential" :error="error?.potential"/>
+      <TextInput type="text" id="potencial" placeholder="R$ 0,00" v-model="potential" :error="error?.potential" v-maska data-maska="R$ ##,##"/>
       
       <label for="categorizacao">Categorização</label>
       <Select :options="categories.getAll()" v-model="category"  :error="error?.category"/>
